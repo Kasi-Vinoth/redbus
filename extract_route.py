@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 import time
-from bus_detail_extract import scrapedetails
+from bus_detail_extract1 import scrapedetails
 from selenium.webdriver.support import expected_conditions as EC
 
 import pandas as pd
@@ -34,7 +34,6 @@ def main_program(state_list_link):
 
             # Step 3: Locate <div class="route_link">
             route_links = main_container.find_elements(By.CLASS_NAME, 'route_link')
-            bus_data = []
             # Extract information from each `route_link`
             for route_link in tqdm(route_links):
                 # print(f"Route Link {index + 1}:")
@@ -58,7 +57,7 @@ def main_program(state_list_link):
                 span_2 = row2_td.find_elements(By.TAG_NAME, 'span')[1].text  # Second totalRoutes span
                 span_3 = row2_td.find_elements(By.TAG_NAME, 'span')[2].text  # Third totalRoutes span
  
-                bus_data_list = scrapedetails(bus_data_list, driver,href,title,state_link)
+                bus_data_list = scrapedetails(bus_data_list,href,title,state_link)
         df = pd.DataFrame(bus_data_list)
         return df
 
@@ -69,3 +68,5 @@ def main_program(state_list_link):
 if __name__ == "__main__":
     state_list_link = ['https://www.redbus.in/online-booking/tsrtc/?utm_source=rtchometile','https://www.redbus.in/online-booking/jksrtc']
     df = main_program(state_list_link)
+    df.to_csv("redbus.csv")
+    print("Saved Successfully")
