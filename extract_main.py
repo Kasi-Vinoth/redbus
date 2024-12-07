@@ -64,7 +64,7 @@ def main(main_url):
     # Print the extracted list
     # print(result_list)
     bus_data_list = []
-    for link in tqdm(result_list[0:3]):
+    for link in tqdm(result_list):
         Transport_Name = link['Transport Name']
         # print(Transport_Name)
         bus_data_list = extract_route(bus_data_list, Transport_Name, link['href'])
